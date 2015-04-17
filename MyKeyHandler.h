@@ -18,9 +18,9 @@ private:
     int kbdFd;  //打开的设备描述符
     bool ledFlag;
     QTimer *start_time;
+    bool videoFlag;
     int maxSecond;
 protected:
-//    void timerEvent(QTimerEvent *e);
 
 private slots:
     void readKpdData();   //信号槽，m_notifier有通知说明设备上有数据
