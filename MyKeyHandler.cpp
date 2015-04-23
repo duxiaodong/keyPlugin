@@ -60,71 +60,57 @@ void KeypadHandler::readKpdData()
         return;
     } 
     if(!ledFlag && event.code == 0 && event.value == 0){
-        qDebug() << "####################open Led close keyboard";
         system("gpio 63 1");
         ledFlag = true;
         maxSecond = 0;
         return;
     }
     if(ledFlag){
-        printf("key pressed: type=%d, code=0x%x, value=%d, %s\n",
-               event.type, event.code, event.value, (event.value != 0)? "(Down)" : "(Up)");
+//        printf("key pressed: type=%d, code=0x%x, value=%d, %s\n",
+//               event.type, event.code, event.value, (event.value != 0)? "(Down)" : "(Up)");
+        maxSecond = 0;
         switch (event.code)
         {
         case 9:
-            key_code = Qt::Key_Left;
-            maxSecond = 0;
+            key_code = Qt::Key_Left;       
             break;
         case 1:
-            key_code = Qt::Key_Right;
-            maxSecond = 0;
+            key_code = Qt::Key_Right;           
             break;
         case 4:
-            key_code = Qt::Key_Up;
-            maxSecond = 0;
+            key_code = Qt::Key_Up;          
             break;
         case 6:
-            key_code = Qt::Key_Down;
-            maxSecond = 0;
+            key_code = Qt::Key_Down;        
             break;
         case 5:
-            key_code = Qt::Key_5;
-            maxSecond = 0;
+            key_code = Qt::Key_5;       
             break;
         case 0:
-            key_code = Qt::Key_Backspace;
-            maxSecond = 0;
+            key_code = Qt::Key_Backspace;          
             break;
         case 2:
-            key_code = Qt::Key_8;
-            maxSecond = 0;
+            key_code = Qt::Key_8;     
             break;
         case 8:
-            key_code = Qt::Key_Space;
-            maxSecond = 0;
+            key_code = Qt::Key_Space;        
             break;
         case 10:
-            key_code = Qt::Key_A;
-            maxSecond = 0;
+            key_code = Qt::Key_A;         
             break;
         case 15:
-            key_code = Qt::Key_F;//复用通话
-            maxSecond = 0;
+            key_code = Qt::Key_F;//复用通话         
             break;
         case 3://群呼
-            key_code = Qt::Key_D;
-            maxSecond = 0;
+            key_code = Qt::Key_D;          
             break;
         case 11://单呼
-            key_code = Qt::Key_B;
-            maxSecond = 0;
+            key_code = Qt::Key_B;        
             break;
         case 7://组呼
-            key_code = Qt::Key_C;
-            maxSecond = 0;
+            key_code = Qt::Key_C;           
             break;
-        default:
-            maxSecond = 0;
+        default:        
             qDebug("Unrecognised key code %d", event.code );
             return;
             break;
@@ -151,7 +137,7 @@ void KeypadHandler::closeLcd()
     if(maxSecond < 30){
         maxSecond+=5;
     }
-    qDebug() << (30 - maxSecond) <<"Second close LED";
+//    qDebug() << (30 - maxSecond) <<"Second close LED";
     if(ledFlag && maxSecond == 30){
         system("gpio 63 0");
         ledFlag = false;
